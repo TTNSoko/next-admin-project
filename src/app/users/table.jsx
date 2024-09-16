@@ -26,18 +26,24 @@ import { useState } from "react";
 
 export function UsersTable(props) {
   const { data, list} = props;
-  const [finder, setFinder] = useState("");
+  // const [finder, setFinder] = useState("");
 
-  const findByName = () => {
-    data.firstname == Input.value
-  }
+  // const findByName = () => {
+  //   data.firstname == Input.value
+  // }
 
-  const searching = data.filter(findByName);
+  // const searching = data.filter(findByName);
 
   return (
     <div className="w-full">
       <div className="flex items-center py-4">
-        <Input type="text" placeholder="Нэрээр хайх..." className="max-w-sm" value={finder} onChange={(e) => setFinder(e.target.value)} />
+        <Input
+          // type="text"
+          placeholder="Нэрээр хайх..."
+          className="max-w-sm"
+          // value={finder}
+          // onChange={(e) => setFinder(e.target.value)}
+        />
       </div>
       <div className="border rounded-md">
         <Table>
