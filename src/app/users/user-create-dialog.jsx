@@ -3,30 +3,40 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogT
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export const UserCreateDialog = ({ open, onClose }) => {
+export function UserCreateDialog(props) {
+  const { open, onClose, addUser, data } = props;
+
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Create user</DialogTitle>
-        </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid gap-2">
-            <Label htmlFor="name">Name</Label>
-            <Input id="name" defaultValue="Pedro Duarte" />
+      {data?.map((item) => (
+        <DialogContent key={item.id} className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Create user</DialogTitle>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid gap-2">
+              <Label htmlFor="name">Name</Label>
+              <Input id="name" defaultValue="Pedro Duarte" />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="username">Username</Label>
+              <Input id="username" defaultValue="@peduarte" />
+            </div>
           </div>
-          <div className="grid gap-2">
-            <Label htmlFor="username">Username</Label>
-            <Input id="username" defaultValue="@peduarte" />
-          </div>
-        </div>
-        <DialogFooter>
-          <Button onClick={() => onClose(false)} variant="outline" type="button">
-            Cancel
-          </Button>
-          <Button type="submit">Save</Button>
-        </DialogFooter>
-      </DialogContent>
+          <DialogFooter>
+            <Button
+              onClick={() => onClose(false)}
+              variant="outline"
+              type="button"
+            >
+              Cancel
+            </Button>
+            <Button onClick={() => addUser(item.id)} type="submit">
+              Save
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      ))}
     </Dialog>
   );
 };

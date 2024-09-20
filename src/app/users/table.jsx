@@ -25,24 +25,26 @@ import { MoreHorizontal, Settings } from "lucide-react";
 import { useState } from "react";
 
 export function UsersTable(props) {
-  const { data, list} = props;
-  // const [finder, setFinder] = useState("");
-
-  // const findByName = () => {
-  //   data.firstname == Input.value
-  // }
-
-  // const searching = data.filter(findByName);
+  const { data, list, remove} = props;
+  const [finder, setFinder] = useState("");
+  
+  const findAcc = data.filter((item) => {
+    return (
+      item.firstname.toLowerCase().includes(finder) ||
+      item.lastname.toLowerCase().includes(finder) ||
+      item.email.toLowerCase().includes(finder)
+    )
+  });
 
   return (
     <div className="w-full">
       <div className="flex items-center py-4">
         <Input
-          // type="text"
+          type="text"
           placeholder="Нэрээр хайх..."
           className="max-w-sm"
-          // value={finder}
-          // onChange={(e) => setFinder(e.target.value)}
+          value={finder}
+          onChange={(e) => setFinder(e.target.value)}
         />
       </div>
       <div className="border rounded-md">
@@ -60,7 +62,7 @@ export function UsersTable(props) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {data?.slice(0, list).map((item, index) => (
+            {findAcc?.slice(0, list).map((item, index) => (
               <TableRow key={item.id}>
                 <TableCell>{index + 1}</TableCell>
                 <TableHead>
@@ -91,7 +93,7 @@ export function UsersTable(props) {
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem>Edit</DropdownMenuItem>
-                      <DropdownMenuItem>Delete</DropdownMenuItem>
+                      <DropdownMenuItem onClick={()=>remove(item.id)} >Delete</DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </TableHead>
