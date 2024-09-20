@@ -25,15 +25,15 @@ import { MoreHorizontal, Settings } from "lucide-react";
 import { useState } from "react";
 
 export function UsersTable(props) {
-  const { data, list, remove} = props;
+  const { data, list, remove } = props;
   const [finder, setFinder] = useState("");
-  
+
   const findAcc = data.filter((item) => {
     return (
       item.firstname.toLowerCase().includes(finder) ||
       item.lastname.toLowerCase().includes(finder) ||
       item.email.toLowerCase().includes(finder)
-    )
+    );
   });
 
   return (
@@ -93,7 +93,9 @@ export function UsersTable(props) {
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem>Edit</DropdownMenuItem>
-                      <DropdownMenuItem onClick={()=>remove(item.id)} >Delete</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => remove(item.id)}>
+                        Delete
+                      </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </TableHead>
