@@ -28,6 +28,7 @@ const Users = () => {
   };
 
   const deleteBtn = (id) => {
+    if(confirm("You are about to delete it"))
     setData(data.filter(item => item.id !== id));
     fetch(`/api/users/${id}`, {
       method: "Delete",
@@ -36,22 +37,19 @@ const Users = () => {
       .then((data) => {
         console.log(data);
       });
-  }
-
-  const addUser = () => {
-    setData([data], { id: data[data.length - 1].id + 1})
-    fetch(`/api/users/${id}`, {
-      method: "Post",
-      body: JSON.stringify({
-
-      })
-    })
-      .then((res) => res.json)
-      .then((data) => {
-        console.log(data);
-      });
   };
 
+  const addUser = (values) => {
+    fetch(`/api/users`, {
+      method: "Post",
+      body: JSON.stringify(values),
+    })
+      .then((res) => res.json())
+      .then((newData) => {
+        setData([...data, newData.data]);
+        setCreateModalOpen(false);
+      });
+  };
 
   return (
     <div>
@@ -59,13 +57,13 @@ const Users = () => {
         <CardHeader>
           <div className="flex justify-between">
             <TypographyH3>Хэрэглэгчид</TypographyH3>
-            <Button addUser={addUser} variant="outline" onClick={() => setCreateModalOpen(true)}>
+            <Button variant="outline" onClick={() => setCreateModalOpen(true)}>
               Шинээр нэмэх
             </Button>
           </div>
         </CardHeader>
         <CardContent>
-          <UsersTable data={data} list={list} remove={deleteBtn}/>
+          <UsersTable data={data} list={list} remove={deleteBtn} />
           {list < data.length && (
             <div className=" p-8 flex justify-center">
               <button onClick={readMore} variant="outline">
@@ -76,7 +74,11 @@ const Users = () => {
         </CardContent>
       </Card>
 
-      <UserCreateDialog open={createModalOpen} onClose={setCreateModalOpen} />
+      <UserCreateDialog
+        onCreate={addUser}
+        open={createModalOpen}
+        onClose={setCreateModalOpen}
+      />
     </div>
   );
 };

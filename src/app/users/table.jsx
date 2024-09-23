@@ -27,12 +27,13 @@ import { useState } from "react";
 export function UsersTable(props) {
   const { data, list, remove } = props;
   const [finder, setFinder] = useState("");
+  console.log(data)
 
   const findAcc = data.filter((item) => {
     return (
-      item.firstname.toLowerCase().includes(finder) ||
-      item.lastname.toLowerCase().includes(finder) ||
-      item.email.toLowerCase().includes(finder)
+      item.firstname.toLowerCase().includes(finder.toLowerCase()) ||
+      item.lastname.toLowerCase().includes(finder.toLowerCase()) ||
+      item.email.toLowerCase().includes(finder.toLowerCase())
     );
   });
 
